@@ -19,13 +19,11 @@ open($fh, "< $name") or die "Could not open file: $name\n";
 while ( ! eof($fh) ) {
     defined( $_ = <$fh> ) or die "readline failed: $!";
     chomp;
-    my ($mode, $uid, $gid, $file) = split(/:/);
+    my ($mode, $file) = split(/:/);
     $known_files{$file} = 1;
     if (-e $file) {
-        my ($actual_mode, $actual_uid, $actual_gid) = (lstat($file))[2,4,5];
-        if (($mode != $actual_mode) or
-            ($uid  != $actual_uid)  or
-            ($gid  != $actual_gid)) {
+        my ($actual_mode) = (lstat($file))[2];
+        if ($mode != $actual_mode) {
                 push(@changed_files, $file);
         }
     }

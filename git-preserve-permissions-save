@@ -7,8 +7,8 @@ my $fh;
 sub save_permissions {
     my $file = $_;
     if (-e $file || -l $file) {
-        my ($mode, $uid, $gid) = (lstat($_))[2,4,5];
-        print $fh "$mode:$uid:$gid:$_\n";
+        my ($mode) = (lstat($_))[2];
+        print $fh "$mode:$_\n";
     } else {
         print "WARNING: A file reported by `git ls-files` doesn't exist: $_\n";
     }

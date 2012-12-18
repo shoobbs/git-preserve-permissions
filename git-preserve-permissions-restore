@@ -15,9 +15,8 @@ open($fh, "< $name") or die "Could not open file: $name\n";
 while ( ! eof($fh) ) {
     defined( $_ = <$fh> ) or die "readline failed: $!";
     chomp;
-    my ($mode, $uid, $gid, $file) = split(/:/);
+    my ($mode, $file) = split(/:/);
     if (-e $file) {
-        chown $uid, $gid, $file;
         chmod $mode, $file;
     }
 }
